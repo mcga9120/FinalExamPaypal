@@ -3,7 +3,7 @@ const Order = require("./Order");
 const OrderState = Object.freeze({
     WELCOMING:   Symbol("welcoming"),
     SIZE:   Symbol("size"),
-    TOPPINGS:   Symbol("toppings"),
+    MEALS:   Symbol("meals"),
     DRINKS:  Symbol("drinks"),
     PAYMENT: Symbol("payment")
 });
@@ -13,22 +13,25 @@ module.exports = class ShwarmaOrder extends Order{
         super(sNumber, sUrl);
         this.stateCur = OrderState.WELCOMING;
         this.sSize = "";
-        this.sToppings = "";
+        this.sMeals = "";
         this.sDrinks = "";
-        this.sItem = "shawarama";
+        this.sItem = "meal";
     }
     handleInput(sInput){
         let aReturn = [];
         switch(this.stateCur){
             case OrderState.WELCOMING:
                 this.stateCur = OrderState.SIZE;
-                aReturn.push("Welcome to Richard's Shawarma.");
-                aReturn.push("What size would you like?");
+                aReturn.push("Welcome to Rory's Popup.");
+                aReturn.push("Here are the current upcoming meals:");
+                aReturn.push("Charcuterie Board, May 24 2021");
+                aReturn.push("Broccoli Cheddar Soup and Bread, May 9 2021");
+                aReturn.push("Dessert Sampler, June 20 2021");
                 break;
             case OrderState.SIZE:
-                this.stateCur = OrderState.TOPPINGS
+                this.stateCur = OrderState.MEALS
                 this.sSize = sInput;
-                aReturn.push("What toppings would you like?");
+                aReturn.push("What meal would you like?");
                 break;
             case OrderState.TOPPINGS:
                 this.stateCur = OrderState.DRINKS
