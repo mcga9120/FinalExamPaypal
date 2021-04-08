@@ -41,7 +41,30 @@ module.exports = class ShwarmaOrder extends Order {
         }
         aReturn.push("Thank-you for your order of");
         aReturn.push(`${this.sMeals}`)
-        aReturn.push(`Please pay for your order here`);
+
+        //calculate $ for order
+
+        if (this.sMeals.toLowerCase().includes("charcuterie board")) {
+
+          {
+
+            this.nTotal = 14;
+
+          }
+
+        } else if (this.sMeals.toLowerCase().includes("broccoli cheddar soup")) {
+
+          this.nTotal = 22;
+
+        }
+
+        if (this.sMeals.toLowerCase().includes("dessert sampler")) {
+
+          this.nTotal = 12;
+
+        }
+
+        aReturn.push(`Please pay $${this.nTotal} for your order here`);
         aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
         break;
       case OrderState.PAYMENT:
