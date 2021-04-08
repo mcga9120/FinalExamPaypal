@@ -35,21 +35,13 @@ module.exports = class ShwarmaOrder extends Order{
                 aReturn.push("What meal would you like?");
                 break;
             case OrderState.MEALS:
-                this.stateCur = OrderState.DRINKS
-                this.sToppings = sInput;
-                aReturn.push("Would you like drinks with that?");
-                break;
-            case OrderState.DRINKS:
                 this.stateCur = OrderState.PAYMENT;
                 this.nOrder = 15;
                 if(sInput.toLowerCase() != "no"){
                     this.sDrinks = sInput;
                 }
                 aReturn.push("Thank-you for your order of");
-                aReturn.push(`${this.sSize} ${this.sItem} with ${this.sToppings}`);
-                if(this.sDrinks){
-                    aReturn.push(this.sDrinks);
-                }
+                aReturn.push(`${this.sMeal}`);
                 aReturn.push(`Please pay for your order here`);
                 aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
                 break;
