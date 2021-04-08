@@ -34,7 +34,7 @@ module.exports = class ShwarmaOrder extends Order{
                 this.sSize = sInput;
                 aReturn.push("What meal would you like?");
                 break;
-            case OrderState.TOPPINGS:
+            case OrderState.MEALS:
                 this.stateCur = OrderState.DRINKS
                 this.sToppings = sInput;
                 aReturn.push("Would you like drinks with that?");
