@@ -40,7 +40,7 @@ module.exports = class ShwarmaOrder extends Order {
           this.sDrinks = sInput;
         }
         aReturn.push("Thank-you for your order of");
-        aReturn.push(`${this.sMeals}`)
+        aReturn.push(`${this.sMeals}`);
 
         //calculate $ for order
 
