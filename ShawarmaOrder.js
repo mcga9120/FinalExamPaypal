@@ -24,9 +24,9 @@ module.exports = class ShwarmaOrder extends Order {
         this.stateCur = OrderState.SIZE;
         aReturn.push("Welcome to Rory's Popup.");
         aReturn.push("Here are the current upcoming meals:");
-        aReturn.push("Charcuterie Board, May 24 2021");
-        aReturn.push("Broccoli Cheddar Soup and Bread, May 9 2021");
-        aReturn.push("Dessert Sampler, June 20 2021");
+        aReturn.push("Charcuterie Board on May 24 2021");
+        aReturn.push("Broccoli Cheddar Soup and Bread on May 9 2021");
+        aReturn.push("Dessert Sampler on June 20 2021");
         aReturn.push("Type READY when your ready to order");
         break;
       case OrderState.SIZE:
@@ -36,7 +36,6 @@ module.exports = class ShwarmaOrder extends Order {
         break;
       case OrderState.MEALS:
         this.stateCur = OrderState.PAYMENT;
-        this.nOrder = 15;
         if (sInput.toLowerCase() != "no") {
           this.sDrinks = sInput;
         }
@@ -48,9 +47,6 @@ module.exports = class ShwarmaOrder extends Order {
       case OrderState.PAYMENT:
         console.log(sInput);
         this.isDone(true);
-        let d = new Date();
-        d.setMinutes(d.getMinutes() + 20);
-        aReturn.push(`Your order will be delivered at ${d.toTimeString()}`);
         break;
     }
     return aReturn;
