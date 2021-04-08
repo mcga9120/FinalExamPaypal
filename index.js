@@ -49,7 +49,7 @@ app.get("/payment/:phone", (req, res) => {
   // this happens when the user clicks on the link in SMS
   const sFrom = req.params.phone;
   if (!oOrders.hasOwnProperty(sFrom)) {
-    res.end("Thank you for your order of");
+    res.end("order already complete");
   } else {
     res.end(oOrders[sFrom].renderForm());
   }
@@ -63,6 +63,13 @@ app.post("/payment", (req, res) => {
   res.end(oOrders[sFrom].renderForm(req.body.title, req.body.price));
 });
 
+app.post("/sms", (req, res) => {
+  // turn taking SMS
+  let sFrom = req.body.From || req.body.from;
+  let sUrl = `${req.headers['x-forwarded-proto'] || req.protocol}://${req.headers['x-forwarded-host'] || req.headers.host}${req.baseUrl}`;
+  if (!oOrders.hasOwnProperty(sFrom)) {
+    oOrders[sFrom] = new ShwarmaOrder(sFrom, sUrl);
+  }
   if (oOrders[sFrom].isDone()) {
     delete oOrders[sFrom];
   }
@@ -76,7 +83,7 @@ app.post("/payment", (req, res) => {
     sResponse += "</Message>";
   }
   res.end(sResponse + "</Response>");
-
+});
 
 io.on('connection', function (socket) {
   // when the client emits 'receive message', this listens and executes
