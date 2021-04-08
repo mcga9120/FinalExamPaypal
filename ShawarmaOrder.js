@@ -40,7 +40,8 @@ module.exports = class ShwarmaOrder extends Order {
         if (sInput.toLowerCase() != "no") {
           this.sDrinks = sInput;
         }
-        aReturn.push(`Thank-you for your order of ${this.sMeals}`);
+        aReturn.push("Thank-you for your order of");
+        aReturn.push(`${this.sSize}`)
         aReturn.push(`Please pay for your order here`);
         aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
         break;
