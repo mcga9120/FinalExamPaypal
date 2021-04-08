@@ -1,70 +1,69 @@
 const Order = require("./Order");
 
 const OrderState = Object.freeze({
-    WELCOMING:   Symbol("welcoming"),
-    SIZE:   Symbol("size"),
-    MEALS:   Symbol("meals"),
-    DRINKS:  Symbol("drinks"),
-    PAYMENT: Symbol("payment")
+  WELCOMING: Symbol("welcoming"),
+  SIZE: Symbol("size"),
+  MEALS: Symbol("meals"),
+  DRINKS: Symbol("drinks"),
+  PAYMENT: Symbol("payment")
 });
 
-module.exports = class ShwarmaOrder extends Order{
-    constructor(sNumber, sUrl){
-        super(sNumber, sUrl);
-        this.stateCur = OrderState.WELCOMING;
-        this.sSize = "";
-        this.sMeals = "";
-        this.sDrinks = "";
-        this.sItem = "meal";
-    }
-    handleInput(sInput){
-        let aReturn = [];
-        switch(this.stateCur){
-            case OrderState.WELCOMING:
-                this.stateCur = OrderState.SIZE;
-                aReturn.push("Welcome to Rory's Popup.");
-                aReturn.push("Here are the current upcoming meals:");
-                aReturn.push("Charcuterie Board, May 24 2021");
-                aReturn.push("Broccoli Cheddar Soup and Bread, May 9 2021");
-                aReturn.push("Dessert Sampler, June 20 2021");
-                aReturn.push("Type READY when your ready to order");
-                break;
-            case OrderState.SIZE:
-                this.stateCur = OrderState.MEALS
-                this.sSize = sInput;
-                aReturn.push("What meal would you like?");
-                break;
-            case OrderState.MEALS:
-                this.stateCur = OrderState.PAYMENT;
-                this.nOrder = 15;
-                if(sInput.toLowerCase() != "no"){
-                    this.sDrinks = sInput;
-                }
-                aReturn.push("Thank-you for your order of");
-                aReturn.push(`${this.sMeals}`);
-                aReturn.push(`Please pay for your order here`);
-                aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
-                break;
-            case OrderState.PAYMENT:
-                console.log(sInput);
-                this.isDone(true);
-                let d = new Date();
-                d.setMinutes(d.getMinutes() + 20);
-                aReturn.push(`Your order will be delivered at ${d.toTimeString()}`);
-                break;
+module.exports = class ShwarmaOrder extends Order {
+  constructor(sNumber, sUrl) {
+    super(sNumber, sUrl);
+    this.stateCur = OrderState.WELCOMING;
+    this.sSize = "";
+    this.sMeals = "";
+    this.sDrinks = "";
+    this.sItem = "meal";
+  }
+  handleInput(sInput) {
+    let aReturn = [];
+    switch (this.stateCur) {
+      case OrderState.WELCOMING:
+        this.stateCur = OrderState.SIZE;
+        aReturn.push("Welcome to Rory's Popup.");
+        aReturn.push("Here are the current upcoming meals:");
+        aReturn.push("Charcuterie Board, May 24 2021");
+        aReturn.push("Broccoli Cheddar Soup and Bread, May 9 2021");
+        aReturn.push("Dessert Sampler, June 20 2021");
+        aReturn.push("Type READY when your ready to order");
+        break;
+      case OrderState.SIZE:
+        this.stateCur = OrderState.MEALS
+        this.sSize = sInput;
+        aReturn.push("What meal would you like?");
+        break;
+      case OrderState.MEALS:
+        this.stateCur = OrderState.PAYMENT;
+        this.nOrder = 15;
+        if (sInput.toLowerCase() != "no") {
+          this.sDrinks = sInput;
         }
-        return aReturn;
+        aReturn.push(`Thank-you for your order of ${this.sMeals}`);
+        aReturn.push(`Please pay for your order here`);
+        aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
+        break;
+      case OrderState.PAYMENT:
+        console.log(sInput);
+        this.isDone(true);
+        let d = new Date();
+        d.setMinutes(d.getMinutes() + 20);
+        aReturn.push(`Your order will be delivered at ${d.toTimeString()}`);
+        break;
     }
-    renderForm(sTitle = "-1", sAmount = "-1"){
-      // your client id should be kept private
-      if(sTitle != "-1"){
-        this.sItem = sTitle;
-      }
-      if(sAmount != "-1"){
-        this.nOrder = sAmount;
-      }
-      const sClientID = process.env.SB_CLIENT_ID || 'put your client id here for testing ... Make sure that you delete it before committing'
-      return(`
+    return aReturn;
+  }
+  renderForm(sTitle = "-1", sAmount = "-1") {
+    // your client id should be kept private
+    if (sTitle != "-1") {
+      this.sItem = sTitle;
+    }
+    if (sAmount != "-1") {
+      this.nOrder = sAmount;
+    }
+    const sClientID = process.env.SB_CLIENT_ID || 'put your client id here for testing ... Make sure that you delete it before committing'
+    return (`
       <!DOCTYPE html>
   
       <head>
@@ -110,6 +109,6 @@ module.exports = class ShwarmaOrder extends Order{
       </body>
           
       `);
-  
-    }
+
+  }
 }
