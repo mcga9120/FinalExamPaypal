@@ -48,23 +48,23 @@ module.exports = class ShwarmaOrder extends Order {
 
           {
 
-            this.nTotal = 14;
+            this.nOrder = 14;
 
           }
 
         } else if (this.sMeals.toLowerCase().includes("broccoli cheddar soup")) {
 
-          this.nTotal = 22;
+          this.nOrder = 22;
 
         }
 
         if (this.sMeals.toLowerCase().includes("dessert sampler")) {
 
-          this.nTotal = 12;
+          this.nOrder = 12;
 
         }
 
-        aReturn.push(`Please pay $${this.nTotal} for your order here`);
+        aReturn.push(`Please pay $${this.nOrder} for your order here`);
         aReturn.push(`${this.sUrl}/payment/${this.sNumber}/`);
         break;
       case OrderState.PAYMENT:
