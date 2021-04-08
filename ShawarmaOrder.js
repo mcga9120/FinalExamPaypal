@@ -27,6 +27,7 @@ module.exports = class ShwarmaOrder extends Order{
                 aReturn.push("Charcuterie Board, May 24 2021");
                 aReturn.push("Broccoli Cheddar Soup and Bread, May 9 2021");
                 aReturn.push("Dessert Sampler, June 20 2021");
+                aReturn.push("Type READY when your ready to order");
                 break;
             case OrderState.SIZE:
                 this.stateCur = OrderState.MEALS
