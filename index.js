@@ -22,6 +22,11 @@ app.use(express.static("www"));
 
 let oSockets = {};
 let oOrders = {};
+
+app.post("/payment", (req, res) => {
+  res.end(`pay here please for ${req.params.title}`);
+});
+
 app.post("/payment/:phone", (req, res) => {
   // this happens when the order is complete
   sFrom = req.params.phone;
